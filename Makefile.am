@@ -429,6 +429,8 @@ i3_config_wizard_i3_config_wizard_LDADD = \
 	$(XKBCOMMON_LIBS)
 
 i3_config_wizard_i3_config_wizard_SOURCES = \
+	$(command_parser_SOURCES) \
+	$(config_parser_SOURCES) \
 	i3-config-wizard/atoms.xmacro \
 	i3-config-wizard/main.c \
 	i3-config-wizard/xcb.h
@@ -594,6 +596,10 @@ $(config_parser_SOURCES): %.h: i3-config-parser.stamp
 src/i3-commands_parser.$(OBJEXT): i3-command-parser.stamp
 
 src/i3-config_parser.$(OBJEXT): i3-config-parser.stamp
+
+i3-config-wizard/i3_config_wizard-main.$(OBJEXT): i3-command-parser.stamp
+
+i3-config-wizard/i3_config_wizard-main.$(OBJEXT): i3-config-parser.stamp
 
 i3-command-parser.stamp: parser/$(dirstamp) generate-command-parser.pl parser-specs/commands.spec
 	$(AM_V_GEN) $(top_srcdir)/generate-command-parser.pl --input=$(top_srcdir)/parser-specs/commands.spec --prefix=command
